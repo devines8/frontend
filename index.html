@@ -2,13 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Frontend 1.0</title>
+    <title>Frontend 2.0</title>
 </head>
 <body>
-    <h2>Отправка данных</h2>
+    <h2>Работа с данными</h2>
+
     <input type="text" id="dataInput" placeholder="Введите данные">
     <button onclick="sendData()">Отправить</button>
     <p id="result"></p>
+
+    <hr>
+
+    <textarea id="output" rows="8" cols="50" placeholder="Здесь появятся данные" readonly></textarea>
+    <br>
+    <button onclick="readData()">Получить данные</button>
 
     <script>
         function sendData() {
@@ -24,6 +31,17 @@
             })
             .catch(error => {
                 document.getElementById("result").textContent = "Ошибка: " + error;
+            });
+        }
+
+        function readData() {
+            fetch("http://127.0.0.1:5000/read")
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById("output").value = result.content;
+            })
+            .catch(error => {
+                document.getElementById("output").value = "Ошибка: " + error;
             });
         }
     </script>
